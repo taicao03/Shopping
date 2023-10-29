@@ -31,7 +31,7 @@
   "main": "next.config.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taicao03/Shopping.git"
+    "url": "git+https://github.com/taicao03/shop.git"
   },
   "author": "",
   "license": "ISC",
