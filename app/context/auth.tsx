@@ -14,14 +14,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const storedUserData = localStorage.getItem("userData");
-  const userData = JSON.parse(storedUserData || "");
+  const userData = JSON?.parse(storedUserData || null);
   const [user, setUser] = useState(userData || null);
 
   const login = async (bodyData: any) => {
     // Gửi yêu cầu đăng nhập và nhận token từ API
 
     try {
-      const response = await axios.post(`${endpoint.login}`, bodyData);
+      const response = await axios.post(`${endpoint.auth}/login`, bodyData);
       const accessToken = response.data.accessToken;
 
       // Lưu token trong localStorage

@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import useAuth from "./context/auth";
 
 export default function Home() {
-  let data = { userName: "admin2", password: "123456789" };
+  let data = { email: "admin@gmail.com", password: "123456789" };
   const { user, login } = useAuth() as { user: any; login: ({}) => void };
 
   const handleLogin = () => {

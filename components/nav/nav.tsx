@@ -24,14 +24,14 @@ export default function Nav() {
     },
     {
       name: "Sign Up",
-      herf: "/sign-up",
+      herf: "/auth/sign-up",
     },
   ];
   const path = usePathname();
   const { user } = useAuth() as { user: any };
 
   return (
-    <>
+    <div className="border-b border-b-black">
       <div className="w-full grid grid-cols-4 py-3 bg-black">
         <div className="col-span-1"></div>
         <div className="col-span-2 text-center">
@@ -46,7 +46,7 @@ export default function Nav() {
         </div>
         <div className="col-span-1"></div>
       </div>
-      <div className="main_container bg-primary pt-10">
+      <div className="main_container bg-primary pt-10 pb-4">
         <div className="grid grid-cols-5 items-center">
           <div className="col-span-1">
             <h2 className="text-[24px] leading-6 text-black font-bold">
@@ -268,6 +268,6 @@ export default function Nav() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

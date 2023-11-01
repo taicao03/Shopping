@@ -24,15 +24,21 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
-    background-color: #fff;
+  background-color: #fff;
 }
 
-.bg_menu{
+.bg_menu {
   background: rgba(0, 0, 0, 0.04);
   backdrop-filter: blur(75px);
 }
-.main_container{
+/* .main_container {
   width: 1170px ;
   margin: 0 auto;
+} */
 
+@media (min-width: 1200px) {
+  .main_container {
+    width: 1170px;
+    margin: 0 auto;
+  }
 }
