@@ -18,43 +18,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState(userData || null);
 
   const login = async (bodyData: any) => {
-    // Gửi yêu cầu đăng nhập và nhận token từ API
-
     try {
       const response = await axios.post(`${endpoint.auth}/login`, bodyData);
       const accessToken = response.data.accessToken;
 
-      // Lưu token trong localStorage
       localStorage.setItem("token", accessToken);
       localStorage.setItem("userData", JSON.stringify(response?.data?.others));
-
-      // Kiểm tra và đăng nhập tự động sau khi làm mới trang
-
-      // Lấy thông tin người dùng từ API sử dụng token
-      // const userResponse = await axios.get(
-      //   `${endpoint.user}/${response?.data?.others?._id}`,
-      //   {
-      //     headers: { token: `Bearer ${accessToken}` },
-      //   }
-      // );
-
-      // const userData = userResponse.data;
-
-      // Lưu thông tin người dùng vào trạng thái
-      // setUser(userData);
     } catch (error) {
       console.error("Đăng nhập thất bại", error);
     }
   };
 
-  // const logout = () => {
-  //   // Xóa token từ localStorage và đặt user thành null
-  //   localStorage.removeItem("token");
-  //   setUser(null);
-  // };
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userData");
+    setUser(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

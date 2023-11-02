@@ -30,6 +30,13 @@ const config: Config = {
             fontWeight: "400",
           },
         ],
+        nav_content: [
+          "14px",
+          {
+            lineHeight: "21px",
+            fontWeight: "400",
+          },
+        ],
       },
       screens: {
         sm: "575px",

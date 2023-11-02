@@ -1,12 +1,12 @@
 "use client";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useAuth from "@/app/context/auth";
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join("");
 }
 export default function Nav() {
   const nav = [
@@ -27,8 +27,29 @@ export default function Nav() {
       herf: "/auth/sign-up",
     },
   ];
+  const account = [
+    {
+      icon: "",
+      url: "/account/my-account",
+      name: "Manage My Account",
+    },
+    {
+      icon: "",
+      url: "",
+      name: "My Order",
+    },
+    {
+      icon: "",
+      url: "",
+      name: "My Cancellations",
+    },
+  ];
   const path = usePathname();
-  const { user } = useAuth() as { user: any };
+  const { user, logout } = useAuth() as { user: any; logout: () => void };
+  const handleLogout = (e: any) => {
+    e.preventDefault();
+    logout();
+  };
 
   return (
     <div className="border-b border-b-black">
@@ -195,68 +216,38 @@ export default function Nav() {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg_menu shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <div className="py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              Account settings
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              Support
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              License
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <form method="POST" action="#">
-                          <Menu.Item>
+                        {account.map((item, index) => (
+                          <Menu.Item key={index}>
                             {({ active }) => (
-                              <button
-                                type="submit"
+                              <a
+                                href={item?.url}
                                 className={classNames(
                                   active
-                                    ? "bg-gray-100 text-gray-900"
-                                    : "text-gray-700",
-                                  "block w-full px-4 py-2 text-left text-sm"
+                                    ? "bg-gray-100 text-gray-900 block px-4 py-2 text-sm w-full"
+                                    : "text-gray-700 block px-4 py-2 text-sm w-full"
                                 )}
                               >
-                                Sign out
-                              </button>
+                                {item?.name}
+                              </a>
                             )}
                           </Menu.Item>
-                        </form>
+                        ))}
+
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={handleLogout}
+                              href={undefined}
+                              className={classNames(
+                                active
+                                  ? "bg-gray-100 text-gray-900 block px-4 py-2 text-sm w-full"
+                                  : "text-gray-700 block px-4 py-2 text-sm w-full"
+                              )}
+                            >
+                              Logout
+                            </a>
+                          )}
+                        </Menu.Item>
                       </div>
                     </Menu.Items>
                   </Transition>
