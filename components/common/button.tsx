@@ -1,14 +1,18 @@
+import Link from "next/link";
+
 export default function Button({
   type,
   text,
   className,
   disabled,
   onClick,
+  href,
 }: {
   type?: "submit" | "reset" | "button";
   text?: string;
   className?: string;
   disabled?: boolean;
+  href?: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }) {
   return (
@@ -19,7 +23,13 @@ export default function Button({
         onClick={onClick}
         disabled={disabled}
       >
-        <p className="text-white text-base font-medium">{text}</p>
+        {href ? (
+          <Link className="text-white text-base font-medium" href={href}>
+            {text}
+          </Link>
+        ) : (
+          <p className="text-white text-base font-medium">{text}</p>
+        )}
       </button>
     </>
   );

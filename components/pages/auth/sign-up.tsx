@@ -5,6 +5,7 @@ import Content from "./index";
 import Button from "@/components/common/button";
 
 import { signUp } from "@/app/actions/auth";
+import Link from "next/link";
 export default function SignUp() {
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -50,6 +51,12 @@ export default function SignUp() {
             <div className="flex justify-between items-center">
               <Button type="submit" text="Create Account" className="w-full" />
             </div>
+            <p className="mt-8 text-2 text-base">
+              Already have account?
+              <Link className="text-black ms-2" href={"/auth/sign-in"}>
+                Login
+              </Link>
+            </p>
           </form>
         </div>
       </div>

@@ -5,9 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useAuth from "@/app/context/auth";
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join("");
-}
 export default function Nav() {
   const nav = [
     {
@@ -52,7 +49,7 @@ export default function Nav() {
   };
 
   return (
-    <div className="border-b border-b-black">
+    <div className="border-b border-b-text-black">
       <div className="w-full grid grid-cols-4 py-3 bg-black">
         <div className="col-span-1"></div>
         <div className="col-span-2 text-center">
@@ -221,11 +218,13 @@ export default function Nav() {
                             {({ active }) => (
                               <a
                                 href={item?.url}
-                                className={classNames(
+                                className={`
+                                ${
                                   active
-                                    ? "bg-gray-100 text-gray-900 block px-4 py-2 text-sm w-full"
-                                    : "text-gray-700 block px-4 py-2 text-sm w-full"
-                                )}
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-white"
+                                }  block px-4 py-2 text-sm w-full cursor-pointer nav_content
+                                `}
                               >
                                 {item?.name}
                               </a>
@@ -238,11 +237,13 @@ export default function Nav() {
                             <a
                               onClick={handleLogout}
                               href={undefined}
-                              className={classNames(
+                              className={`
+                              ${
                                 active
-                                  ? "bg-gray-100 text-gray-900 block px-4 py-2 text-sm w-full"
-                                  : "text-gray-700 block px-4 py-2 text-sm w-full"
-                              )}
+                                  ? "bg-gray-100 text-gray-900"
+                                  : "text-white"
+                              }  block px-4 py-2 text-sm w-full cursor-pointer nav_content
+                              `}
                             >
                               Logout
                             </a>
