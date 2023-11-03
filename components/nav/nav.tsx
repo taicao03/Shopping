@@ -42,10 +42,10 @@ export default function Nav() {
     },
   ];
   const path = usePathname();
-  const { user, logout } = useAuth() as { user: any; logout: () => void };
+  const { user, logOut } = useAuth() as { user: any; logOut: () => void };
   const handleLogout = (e: any) => {
     e.preventDefault();
-    logout();
+    logOut();
   };
 
   return (
@@ -235,8 +235,8 @@ export default function Nav() {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              onClick={handleLogout}
                               href={undefined}
+                              onClick={handleLogout}
                               className={`
                               ${
                                 active

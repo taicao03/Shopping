@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 
 import Content from "./index";
 import Button from "@/components/common/button";
+import Input from "@/components/common/input";
 
 import { signUp } from "@/app/actions/auth";
 import Link from "next/link";
@@ -43,7 +44,7 @@ export default function SignUp() {
               className="outline-none border-b border-b-1 w-full placeholder:text-2 placeholder:text-base text-black text-base mb-10"
             />
             <input
-              type="text"
+              type="password"
               name="password"
               placeholder="Password"
               className="outline-none border-b border-b-1 w-full placeholder:text-2 placeholder:text-base text-black text-base mb-10"

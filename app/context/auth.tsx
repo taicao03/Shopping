@@ -2,10 +2,10 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import axios from "axios";
-import endpoint from "@/app/network";
-const AuthContext = createContext({});
+import { deleteCookie, getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
+const AuthContext = createContext({});
 export default function useAuth() {
   return useContext(AuthContext);
 }
@@ -13,30 +13,22 @@ export default function useAuth() {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const storedUserData = localStorage.getItem("userData");
-  const userData = JSON?.parse(storedUserData || null);
-  const [user, setUser] = useState(userData || null);
+  const router = useRouter();
 
-  const login = async (bodyData: any) => {
-    try {
-      const response = await axios.post(`${endpoint.auth}/login`, bodyData);
-      const accessToken = response.data.accessToken;
+  const [user, setUser] = useState(() => {
+    const cookie = getCookie("user");
+    return cookie ? JSON.parse(cookie) : null;
+  });
 
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("userData", JSON.stringify(response?.data?.others));
-    } catch (error) {
-      console.error("Đăng nhập thất bại", error);
-    }
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userData");
+  const logOut = () => {
+    deleteCookie("user");
+    deleteCookie("token");
     setUser(null);
+    router.push("/");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, logOut }}>
       {children}
     </AuthContext.Provider>
   );
