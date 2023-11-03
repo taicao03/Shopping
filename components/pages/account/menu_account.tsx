@@ -17,7 +17,7 @@ export default function MenuAccount() {
     },
     {
       name: "My Order",
-      url: "/",
+      url: "/account/my-order",
     },
   ];
 

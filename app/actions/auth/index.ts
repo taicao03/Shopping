@@ -6,6 +6,7 @@ import type { SignUp, Account, SignIn } from "@/app/types/auth";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+
 export const signUp = async (e: FormData) => {
   const userName = e.get("userName")?.toString();
   const email = e.get("email")?.toString();
