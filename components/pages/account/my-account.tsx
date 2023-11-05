@@ -5,6 +5,8 @@ import useAuth from "@/app/context/auth";
 import MenuAccount from "./menu_account";
 import Input from "@/components/common/input";
 import Button from "@/components/common/button";
+import CounterInput from "@/components/common/counter_input";
+
 import { account } from "@/app/actions/auth";
 
 export default function UiMyAccount() {
@@ -43,6 +45,7 @@ export default function UiMyAccount() {
           </div>
           <div className="col-span-2">
             <h2></h2>
+            <CounterInput />
             <form action={account}>
               <div className="grid grid-cols-2 gap-x-[50px]">
                 <Input
@@ -63,6 +66,8 @@ export default function UiMyAccount() {
                   name="email"
                   label="Email"
                 />
+                <input name="avatar" type="file" />
+
                 <div className="flex justify-end col-span-2">
                   <p>Cancel</p>
                   <Button type="submit" text="Save Changes" />

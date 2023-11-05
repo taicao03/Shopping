@@ -216,7 +216,7 @@ export default function Nav() {
                         {account.map((item, index) => (
                           <Menu.Item key={index}>
                             {({ active }) => (
-                              <a
+                              <Link
                                 href={item?.url}
                                 className={`
                                 ${
@@ -227,15 +227,14 @@ export default function Nav() {
                                 `}
                               >
                                 {item?.name}
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         ))}
 
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href={undefined}
+                            <div
                               onClick={handleLogout}
                               className={`
                               ${
@@ -244,9 +243,7 @@ export default function Nav() {
                                   : "text-white"
                               }  block px-4 py-2 text-sm w-full cursor-pointer nav_content
                               `}
-                            >
-                              Logout
-                            </a>
+                            ></div>
                           )}
                         </Menu.Item>
                       </div>

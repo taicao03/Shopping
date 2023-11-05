@@ -39,10 +39,10 @@ export default function UiMyAccount({ result }: any) {
             <MenuAccount />
           </div>
           <div className="col-span-2">
-            {result?.hisory?.map((item) => (
+            {result?.hisory?.map((item: any) => (
               <>
-                {item?.items.map((i) => (
-                  <div className="mb-5">
+                {item?.items.map((i: any, index: any) => (
+                  <div className="mb-5" key={index}>
                     <p className="text-black">{i?.productName}</p>
                     <p className="text-black">{i?.quantity}</p>
                     <p className="text-black">{i?.price}</p>

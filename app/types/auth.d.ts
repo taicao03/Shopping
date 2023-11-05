@@ -13,4 +13,5 @@ export interface Account {
   userName?: string;
   email?: string;
   phone?: number;
+  avatar?: string;
 }

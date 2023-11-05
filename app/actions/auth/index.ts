@@ -3,7 +3,7 @@
 import axios from "axios";
 import endpoint from "@/app/network";
 import type { SignUp, Account, SignIn } from "@/app/types/auth";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
@@ -63,34 +63,41 @@ export const logOut = async () => {
 export const account = async (e: FormData) => {
   const user = cookies().get("user")?.value;
   const token = cookies().get("token")?.value;
-  console.log(token);
 
   const getUser = JSON.parse(user);
   const getToken = JSON.parse(token);
 
   const userName = e.get("userName")?.toString();
   const email = e.get("email")?.toString();
-
-  if (!email || !userName) return;
+  const avatar = e.get("avatar");
+  
+  if (!email || !userName || !avatar) return;
 
   const updateAccount: Account = {
     userName,
     email,
+    avatar,
   };
 
-  await axios.put(`${endpoint.user}/${getUser?._id}`, updateAccount, {
+
+ try {
+   
+  await axios.put(`${endpoint.user}`, updateAccount, {
     headers: {
       token: `Break ${getToken}`,
     },
   });
-
   const getOneUser = await axios.get(`${endpoint.user}/${getUser?._id}`, {
     headers: {
       token: `Break ${getToken}`,
     },
   });
-  cookies().set("user", JSON.stringify(getOneUser?.data));
+   cookies().set("user", JSON.stringify(getOneUser?.data));
+   revalidateTag("/account/my-account");
+   revalidatePath('/account/my-account')
+  } catch (e) {
+    return { message: 'Failed to create' }
+  }
+   redirect("/account/my-account")
 
-  revalidateTag("/account/my-account");
-  redirect(`/account/my-account`);
 };

@@ -35,6 +35,20 @@ body {
   width: 1170px ;
   margin: 0 auto;
 } */
+.no-spin {
+  appearance: textfield;
+}
+
+.no-spin::-webkit-inner-spin-button, 
+.no-spin::-webkit-outer-spin-button {
+  display: none;
+}
+
+.no-spin::-webkit-outer-spin-button,
+.no-spin::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 @media (min-width: 1200px) {
   .main_container {

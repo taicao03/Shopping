@@ -23,18 +23,20 @@ export default function MenuAccount() {
 
   return (
     <>
-      {listMenu?.map((i, index) => (
-        <div key={index} className=" mb-2">
-          <Link
-            href={i?.url}
-            className={`text-base ${
-              path == i?.url ? "text-button_2 pointer-events-none" : "text-2"
-            }`}
-          >
-            {i?.name}
-          </Link>
-        </div>
-      ))}
+      <div>
+        {listMenu?.map((i, index) => (
+          <div key={index} className=" mb-2">
+            <Link
+              href={i?.url}
+              className={`text-base ${
+                path == i?.url ? "text-button_2 pointer-events-none" : "text-2"
+              }`}
+            >
+              {i?.name}
+            </Link>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
