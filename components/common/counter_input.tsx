@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 
-export default function CounterInput() {
+export default function CounterInput({
+  onChange,
+  name,
+}: {
+  onChange?: any;
+  name?: any;
+}) {
   const [count, setCount] = useState(1);
 
   const increment = () => {
@@ -40,8 +46,10 @@ export default function CounterInput() {
       <input
         type="number"
         value={count}
+        onChange={onChange}
         className="no-spin text-black w-20 h-11 outline-none border-y border-outline text-center"
         inputMode="numeric"
+        name={name}
         pattern="[0-9]*"
       />
       <button

@@ -1,7 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { addToCart } from "@/app/actions/cart/index";
 import CounterInput from "@/components/common/counter_input";
 import Button from "@/components/common/button";
+import { revalidateTag } from "next/cache";
 export default function DetailProduct({ props }: any) {
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
@@ -40,8 +42,8 @@ export default function DetailProduct({ props }: any) {
         stars.push(
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
+            width="17"
+            height="17"
             viewBox="0 0 20 20"
             fill="none"
           >
@@ -78,6 +80,15 @@ export default function DetailProduct({ props }: any) {
     return <div className="flex items-center">{stars}</div>;
   }
 
+  const handleSubmit = async (e: FormData) => {
+    e.append("productId", `${props?._id}`);
+    e.append("color", `${color}`);
+    e.append("size", `${size}`);
+
+    await addToCart(e);
+    revalidateTag("posts");
+  };
+
   return (
     <div className="grid grid-cols-3">
       <div className="col-span-2">dsfds</div>
@@ -85,9 +96,23 @@ export default function DetailProduct({ props }: any) {
         <h2 className="text-black font-semibold leading-6 text-[24px] mb-4">
           {props?.nameCard}
         </h2>
-        <p className="mb-4">
+        <div className="mb-4 flex items-center">
           <StarRating rating={props?.totalRating} />
-        </p>
+          <span className="text-base ms-2 me-4 text-2 text-[14px]">
+            {`(${props?.reviews.length} Reviews)`} |
+          </span>
+          <span>
+            {props?.quantity == 0 ? (
+              <p className="capitalize text-[14px] font-normal leading-5 text-red">
+                out of stock
+              </p>
+            ) : (
+              <p className="capitalize text-[14px] font-normal leading-5 text-green">
+                In Stock
+              </p>
+            )}
+          </span>
+        </div>
 
         <p className="mb-6 text-base text-[24px] text-black">
           <span className="text-[20px]">$</span>
@@ -98,45 +123,51 @@ export default function DetailProduct({ props }: any) {
           {props?.description}
         </p>
 
-        <div className="flex items-center mb-6">
-          <p className="text-black me-2 text-base text-[24px]">Colours:</p>
-          <div>
-            {props?.properties?.color.map((i: any, index: number) => (
-              <button
-                className={`p-2.5 rounded-full me-2 ${
-                  color == i?.code ? "border-2 border-blue-500" : ""
-                }`}
-                onClick={() => selectdColor(i?.code)}
-                key={index}
-                style={{ background: `#${i?.code}` }}
-              ></button>
-            ))}
+        <form action={handleSubmit}>
+          <div className="flex items-center mb-6">
+            <p className="text-black me-2 text-base text-[24px]">Colours:</p>
+            <div>
+              {props?.properties?.color.map((i: any, index: number) => (
+                <button
+                  className={`p-2.5 rounded-full me-2 ${
+                    color == i?.code ? "border-2 border-blue-500" : ""
+                  }`}
+                  type="button"
+                  onClick={() => selectdColor(i?.code)}
+                  key={index}
+                  style={{ background: `#${i?.code}` }}
+                ></button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="flex items-center mb-6">
-          <p className="text-black me-2 text-base text-[24px]">Size:</p>
-          <div className="flex gap-2 flex-wrap">
-            {props?.properties?.size.map((i: any, index: number) => (
-              <button
-                className={`w-8 h-8 text-center  rounded ${
-                  size == i ? "bg-button_2" : "border border-outline"
-                }`}
-                onClick={() => selectdSize(i)}
-                key={index}
-              >
-                <span className={`${size == i ? "text-white" : "text-black"}`}>
-                  {i}
-                </span>
-              </button>
-            ))}
+          <div className="flex items-center mb-6">
+            <p className="text-black me-2 text-base text-[24px]">Size:</p>
+            <div className="flex gap-2 flex-wrap">
+              {props?.properties?.size.map((i: any, index: number) => (
+                <button
+                  type="button"
+                  className={`w-8 h-8 text-center  rounded ${
+                    size == i ? "bg-button_2" : "border border-outline"
+                  }`}
+                  onClick={() => selectdSize(i)}
+                  key={index}
+                >
+                  <span
+                    className={`${size == i ? "text-white" : "text-black"}`}
+                  >
+                    {i}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="flex flex-wrap gap-4 mb-10">
-          <CounterInput />
-          <Button type="submit" text="Buy Now" className="py-0" />
-        </div>
+          <div className="flex flex-wrap gap-4 mb-10">
+            <CounterInput name="quantity" />
+            <Button type="submit" text="Buy Now" py="py-0" />
+          </div>
+        </form>
       </div>
     </div>
   );

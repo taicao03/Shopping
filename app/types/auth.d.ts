@@ -15,3 +15,10 @@ export interface Account {
   phone?: number;
   avatar?: string;
 }
+
+export interface AddToCart {
+  productId?: string;
+  color?: string;
+  quantity?: number;
+  size;
+}

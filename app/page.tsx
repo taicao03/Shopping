@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <div className="main_container">
       <div className="text-black">{user?.userName}</div>
-      <div className="">addasds</div>
     </div>
   );
 }

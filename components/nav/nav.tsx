@@ -74,7 +74,7 @@ export default function Nav() {
           <div className="col-span-2">
             <nav className="flex gap-[48px]">
               {nav.map((item, index) => (
-                <li key={index}>
+                <li key={index} className="list-none">
                   <Link href={item?.herf}>
                     <span
                       className={`text-black leading-6 text-[16px] font-normal ${
@@ -211,7 +211,7 @@ export default function Nav() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg_menu shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg_menu shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none list-none">
                       <div className="py-1">
                         {account.map((item, index) => (
                           <Menu.Item key={index}>

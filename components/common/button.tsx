@@ -7,24 +7,28 @@ export default function Button({
   disabled,
   onClick,
   href,
+  py,
 }: {
   type?: "submit" | "reset" | "button";
   text?: string;
   className?: string;
   disabled?: boolean;
   href?: string;
+  py?: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }) {
   return (
     <>
       <button
-        className={`${className} bg-button_2 rounded-[4px] py-4 px-12`}
+        className={`bg-button_2 rounded-[4px] px-12 ${
+          py || "py-4"
+        } ${className}`}
         type={type}
         onClick={onClick}
         disabled={disabled}
       >
         {href ? (
-          <Link className="text-white text-base font-medium" href={href}>
+          <Link href={href} className="text-white text-base font-medium">
             {text}
           </Link>
         ) : (

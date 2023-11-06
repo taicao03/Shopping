@@ -21,7 +21,9 @@ const config: Config = {
         footer: "#FAFAFA",
         button_2: "#DB4444",
         "2": "#7D8184",
-        "outline": "#7D8184",
+        outline: "#7D8184",
+        green: "#27CE60",
+        red: "#DF2648",
       },
       fontSize: {
         base: [
