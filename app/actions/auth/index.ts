@@ -3,7 +3,7 @@
 import axios from "axios";
 import endpoint from "@/app/network";
 import type { SignUp, Account, SignIn } from "@/app/types/auth";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
@@ -40,16 +40,20 @@ export const signIn = async (e: FormData) => {
     password,
   };
 
-  await axios
-    .post(`${endpoint.auth}/login`, signIn)
-    .then(function (response) {
-      cookies().set("user", JSON.stringify(response?.data?.others));
-      cookies().set("token", JSON.stringify(response?.data?.accessToken));
-      redirect(`/`);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  const res = await fetch(`${endpoint.auth}/login`, {
+    method: "POST",
+    body: JSON.stringify(signIn),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    cookies().set("user", JSON.stringify(data?.others));
+    cookies().set("token", JSON.stringify(data?.accessToken));
+    redirect(`/`);
+  }
 };
 
 export const logOut = async () => {
@@ -60,12 +64,24 @@ export const logOut = async () => {
   cookies().delete("user");
 };
 
-export const account = async (e: FormData) => {
-  const user = cookies().get("user")?.value;
+export const getOneUser = async () => {
   const token = cookies().get("token")?.value;
+  const getToken = JSON.parse(token);
 
-  const getUser = JSON.parse(user);
+  const res = await fetch(`${endpoint.user}/one-user`, {
+    headers: {
+      token: `Break ${getToken}`,
+    },
+    next: { tags: ["account"] },
+  });
 
+  if (res.ok) {
+    return res.json();
+  }
+};
+
+export const account = async (e: FormData) => {
+  const token = cookies().get("token")?.value;
   const getToken = JSON.parse(token);
 
   const userName = e.get("userName")?.toString();
@@ -79,18 +95,20 @@ export const account = async (e: FormData) => {
   };
 
   try {
-    await axios.put(`${endpoint.user}`, updateAccount, {
+    const res = await fetch(`${endpoint.user}`, {
+      method: "PUT",
+      body: JSON.stringify(updateAccount),
       headers: {
+        "Content-Type": "application/json",
         token: `Break ${getToken}`,
       },
     });
-    const getOneUser = await axios.get(`${endpoint.user}/one-user`, {
-      headers: {
-        token: `Break ${getToken}`,
-      },
-    });
-    cookies().set("user", JSON.stringify(getOneUser?.data));
-    revalidateTag("myAccount");
+
+    if (res.ok) {
+      const userData = await getOneUser();
+      cookies().set("user", JSON.stringify(userData));
+      revalidateTag("account");
+    }
   } catch (e) {
     return { message: "Failed to create" };
   }

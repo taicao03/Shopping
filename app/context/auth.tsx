@@ -4,6 +4,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { deleteCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import { getOneUser } from "../actions/auth";
 
 const AuthContext = createContext({});
 export default function useAuth() {

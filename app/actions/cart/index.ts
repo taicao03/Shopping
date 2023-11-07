@@ -1,6 +1,5 @@
 "use server";
 
-import axios from "axios";
 import endpoint from "@/app/network";
 import type { AddToCart } from "@/app/types/auth";
 import { cookies } from "next/headers";
@@ -29,4 +28,16 @@ export const addToCart = async (e: FormData) => {
   });
 
   return res.json();
+};
+
+export const getCart = async () => {
+  const user = cookies().get("user")?.value;
+  const getUser = JSON.parse(user);
+  console.log(getUser);
+
+  const res = await fetch(`${endpoint.cart}/cart/${getUser?._id}`);
+
+  if (res.ok) {
+    return res.json();
+  }
 };

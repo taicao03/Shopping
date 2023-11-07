@@ -1,15 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import useAuth from "@/app/context/auth";
 import MenuAccount from "./menu_account";
 import Input from "@/components/common/input";
 import Button from "@/components/common/button";
 
 import { account } from "@/app/actions/auth";
 
-export default function UiMyAccount() {
-  const { user } = useAuth() as { user: any };
+export default function UiMyAccount(user: any) {
   const menu = [
     {
       name: "Home",
@@ -28,13 +26,14 @@ export default function UiMyAccount() {
                 href={item?.url}
                 className="text-2 text-nav_content me-2"
               >
-                {item?.name} /
+                {item?.name}
               </Link>
             ))}
             <p className="text-black text-nav_content me-2">My account</p>
           </div>
           <p className="text-nav_content text-black">
-            Welcome! <span className="text-button_2">{user?.userName}</span>
+            Welcome!{" "}
+            <span className="text-button_2">{user?.user?.userName}</span>
           </p>
         </div>
 
@@ -47,19 +46,20 @@ export default function UiMyAccount() {
             <form action={account}>
               <div className="grid grid-cols-2 gap-x-[50px]">
                 <Input
-                  defaultValue={user?.userName}
+                  defaultValue={user?.user?.userName}
                   parentClass="col-span-1"
                   name="userName"
                   label="Name"
                 />
                 <Input
-                  defaultValue={user?.phone}
+                  defaultValue={user?.user?.phone}
                   parentClass="col-span-1"
                   name="phone"
                   label="Phone"
                 />
                 <Input
-                  defaultValue={user?.email}
+                  disabled={true}
+                  defaultValue={user?.user?.email}
                   parentClass="col-span-1"
                   name="email"
                   label="Email"
