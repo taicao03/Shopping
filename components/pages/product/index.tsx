@@ -86,7 +86,6 @@ export default function DetailProduct({ props }: any) {
     e.append("size", `${size}`);
 
     await addToCart(e);
-    revalidateTag("posts");
   };
 
   return (

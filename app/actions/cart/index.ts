@@ -2,6 +2,7 @@
 
 import endpoint from "@/app/network";
 import type { AddToCart } from "@/app/types/auth";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const addToCart = async (e: FormData) => {
@@ -27,17 +28,7 @@ export const addToCart = async (e: FormData) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  return res.json();
-};
-
-export const getCart = async () => {
-  const user = cookies().get("user")?.value;
-  const getUser = JSON.parse(user);
-  console.log(getUser);
-
-  const res = await fetch(`${endpoint.cart}/cart/${getUser?._id}`);
-
   if (res.ok) {
-    return res.json();
+    revalidateTag("test");
   }
 };

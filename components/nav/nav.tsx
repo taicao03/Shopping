@@ -280,7 +280,7 @@ export default function Nav() {
         height="h-screen"
         onClose={closeMenu}
       >
-        <Cart />
+        <Cart userId={user?._id} />
       </Popup>
     </>
   );
