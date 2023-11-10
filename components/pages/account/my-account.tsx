@@ -6,14 +6,42 @@ import Input from "@/components/common/input";
 import Button from "@/components/common/button";
 
 import { account } from "@/app/actions/auth";
+import { useState } from "react";
+import axios from "axios";
 
 export default function UiMyAccount(user: any) {
+  const [avatar, setAvatar] = useState();
+
+  const onInputChange = (e) => {
+    setAvatar(e.target.files[0]);
+  };
   const menu = [
     {
       name: "Home",
       url: "/",
     },
   ];
+
+  const handleSubmit = async (e: FormData) => {
+    e.append("avatar", avatar);
+
+    await account(e);
+  };
+
+  const submit = async (e) => {
+    // e.preventDefault();
+
+    const fromData = new FormData();
+    fromData.append("avatar", avatar);
+    fromData.append("userName", "aaedd");
+
+    const result = await axios.put(`http://localhost:8080/v1/user`, fromData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        token: `Break eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDIyNDc4OGViNTViY2RhOTVhNTI5NCIsImFkbWluIjpmYWxzZSwiaWF0IjoxNjk5NjA4ODAyLCJleHAiOjE3MjU1Mjg4MDJ9.T-UuBVqLrfqgNKNTbvsjGyEI9WCZjyk1uyMyB7tUn-M`,
+      },
+    });
+  };
 
   return (
     <>
@@ -33,6 +61,11 @@ export default function UiMyAccount(user: any) {
           </div>
           <p className="text-nav_content text-black">
             Welcome!{" "}
+            <img
+              className="h-20 w-20"
+              src={`http://localhost:8080/uploads/${user?.user?.avatar}`}
+              alt=""
+            />
             <span className="text-button_2">{user?.user?.userName}</span>
           </p>
         </div>
@@ -43,7 +76,20 @@ export default function UiMyAccount(user: any) {
           </div>
           <div className="col-span-2">
             <h2></h2>
-            <form action={account}>
+
+            <form onSubmit={submit}>
+              <input
+                type="file"
+                accept="image/png, image/jpeg"
+                onChange={onInputChange}
+              />
+
+              <div className="flex justify-end col-span-2">
+                <p>Cancel</p>
+                <Button type="submit" text="Save Changes" />
+              </div>
+            </form>
+            <form action={handleSubmit}>
               <div className="grid grid-cols-2 gap-x-[50px]">
                 <Input
                   defaultValue={user?.user?.userName}
@@ -63,6 +109,12 @@ export default function UiMyAccount(user: any) {
                   parentClass="col-span-1"
                   name="email"
                   label="Email"
+                />
+
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onChange={onInputChange}
                 />
 
                 <div className="flex justify-end col-span-2">

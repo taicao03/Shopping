@@ -86,30 +86,29 @@ export const account = async (e: FormData) => {
 
   const userName = e.get("userName")?.toString();
   const email = e.get("email")?.toString();
+  const avatar = e.get("avatar");
 
-  if (!email || !userName) return;
+  if (!userName) return;
 
   const updateAccount: Account = {
     userName,
     email,
+    avatar,
   };
 
-  try {
-    const res = await fetch(`${endpoint.user}`, {
-      method: "PUT",
-      body: JSON.stringify(updateAccount),
-      headers: {
-        "Content-Type": "application/json",
-        token: `Break ${getToken}`,
-      },
-    });
+  const res = await fetch(`${endpoint.user}`, {
+    method: "PUT",
+    body: JSON.stringify(updateAccount),
+    headers: {
+      "Content-Type": "multipart/form-data",
+      // Accept: "application/json",
+      token: `Break ${getToken}`,
+    },
+  });
 
-    if (res.ok) {
-      const userData = await getOneUser();
-      cookies().set("user", JSON.stringify(userData));
-      revalidateTag("account");
-    }
-  } catch (e) {
-    return { message: "Failed to create" };
+  if (res.ok) {
+    const userData = await getOneUser();
+    cookies().set("user", JSON.stringify(userData));
+    revalidateTag("account");
   }
 };
