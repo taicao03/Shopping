@@ -1,16 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import endpoint from "@/app/network";
 import MenuAccount from "./menu_account";
 import Input from "@/components/common/input";
 import Button from "@/components/common/button";
-
-import { account } from "@/app/actions/auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
+import useAuth from "@/app/context/auth";
 
 export default function UiMyAccount(user: any) {
   const [avatar, setAvatar] = useState();
+  const [userName, setUserName] = useState("");
+  const { token } = useAuth() as { token: any };
+
+  const router = useRouter();
 
   const onInputChange = (e) => {
     setAvatar(e.target.files[0]);
@@ -22,25 +27,27 @@ export default function UiMyAccount(user: any) {
     },
   ];
 
-  const handleSubmit = async (e: FormData) => {
-    e.append("avatar", avatar);
-
-    await account(e);
-  };
-
-  const submit = async (e) => {
-    // e.preventDefault();
+  const submit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
 
     const fromData = new FormData();
-    fromData.append("avatar", avatar);
-    fromData.append("userName", "aaedd");
 
-    const result = await axios.put(`http://localhost:8080/v1/user`, fromData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        token: `Break eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NDIyNDc4OGViNTViY2RhOTVhNTI5NCIsImFkbWluIjpmYWxzZSwiaWF0IjoxNjk5NjA4ODAyLCJleHAiOjE3MjU1Mjg4MDJ9.T-UuBVqLrfqgNKNTbvsjGyEI9WCZjyk1uyMyB7tUn-M`,
-      },
-    });
+    fromData.append("avatar", avatar);
+    fromData.append("userName", userName);
+
+    const result = await axios
+      .put(`${endpoint.user}`, fromData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          token: `Break ${token}`,
+        },
+      })
+      .then((response) => {
+        router.refresh();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -78,22 +85,16 @@ export default function UiMyAccount(user: any) {
             <h2></h2>
 
             <form onSubmit={submit}>
-              <input
-                type="file"
-                accept="image/png, image/jpeg"
-                onChange={onInputChange}
-              />
-
-              <div className="flex justify-end col-span-2">
-                <p>Cancel</p>
-                <Button type="submit" text="Save Changes" />
-              </div>
-            </form>
-            <form action={handleSubmit}>
-              <div className="grid grid-cols-2 gap-x-[50px]">
+              <div className="grid-cols-2 grid gap-x-6">
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onChange={onInputChange}
+                />
                 <Input
                   defaultValue={user?.user?.userName}
                   parentClass="col-span-1"
+                  onChange={(e: any) => setUserName(e.target.value)}
                   name="userName"
                   label="Name"
                 />
@@ -110,17 +111,11 @@ export default function UiMyAccount(user: any) {
                   name="email"
                   label="Email"
                 />
+              </div>
 
-                <input
-                  type="file"
-                  accept="image/png, image/jpeg"
-                  onChange={onInputChange}
-                />
-
-                <div className="flex justify-end col-span-2">
-                  <p>Cancel</p>
-                  <Button type="submit" text="Save Changes" />
-                </div>
+              <div className="flex justify-end col-span-2">
+                <p>Cancel</p>
+                <Button type="submit" text="Save Changes" />
               </div>
             </form>
           </div>

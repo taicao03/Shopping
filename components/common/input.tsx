@@ -7,6 +7,7 @@ export default function Input({
   parentClass,
   disabled,
   name,
+  onChange,
 }: {
   type?: "submit" | "reset" | "button";
   className?: string;
@@ -14,6 +15,7 @@ export default function Input({
   placeholder?: string;
   label?: string;
   name?: string;
+  onChange?: any;
   disabled?: boolean;
   parentClass?: string;
 }) {
@@ -30,6 +32,7 @@ export default function Input({
         <input
           name={name}
           type={type}
+          onChange={onChange}
           disabled={disabled}
           defaultValue={defaultValue}
           autoComplete="given-name"

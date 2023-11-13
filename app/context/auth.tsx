@@ -4,7 +4,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { deleteCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
-import { getOneUser } from "../actions/auth";
 
 const AuthContext = createContext({});
 export default function useAuth() {
@@ -21,6 +20,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return cookie ? JSON.parse(cookie) : null;
   });
 
+  const [token] = useState(() => {
+    const token = getCookie("token");
+    return token ? JSON.parse(token) : null;
+  });
+
   const logOut = () => {
     deleteCookie("user");
     deleteCookie("token");
@@ -29,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ user, logOut }}>
+    <AuthContext.Provider value={{ user, logOut, token }}>
       {children}
     </AuthContext.Provider>
   );

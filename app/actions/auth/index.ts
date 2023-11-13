@@ -3,8 +3,8 @@
 import axios from "axios";
 import endpoint from "@/app/network";
 import type { SignUp, Account, SignIn } from "@/app/types/auth";
-import { revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
+import { revalidatePath, revalidateTag } from "next/cache";
+import { redirect  } from "next/navigation";
 import { cookies } from "next/headers";
 
 export const signUp = async (e: FormData) => {
@@ -52,7 +52,9 @@ export const signIn = async (e: FormData) => {
     const data = await res.json();
     cookies().set("user", JSON.stringify(data?.others));
     cookies().set("token", JSON.stringify(data?.accessToken));
+    revalidatePath('/' ,"page")
     redirect(`/`);
+    
   }
 };
 

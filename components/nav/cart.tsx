@@ -6,8 +6,6 @@ import endpoint from "@/app/network";
 export default function Cart({ userId }: { userId?: string }) {
   const [data, setData] = useState([]);
 
-  console.log(data);
-
   useEffect(() => {
     const apiUrl = `${endpoint.cart}/cart/${userId}`;
 
