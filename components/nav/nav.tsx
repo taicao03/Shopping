@@ -1,14 +1,17 @@
 "use client";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import endpoint from "@/app/network";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import useAuth from "@/app/context/auth";
-import Cart from "./cart";
+import UiCart from "./cart";
 import Popup from "../common/popup";
+import { Cart } from "@/app/types/product";
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [data, setData] = useState<Cart>();
 
   const openMenu = () => {
     setIsMenuOpen(true);
@@ -35,6 +38,7 @@ export default function Nav() {
       herf: "/auth/sign-up",
     },
   ];
+
   const account = [
     {
       icon: "",
@@ -52,12 +56,24 @@ export default function Nav() {
       name: "My Cancellations",
     },
   ];
+
   const path = usePathname();
   const { user, logOut } = useAuth() as { user: any; logOut: () => void };
   const handleLogout = (e: any) => {
     e.preventDefault();
     logOut();
   };
+
+  useEffect(() => {
+    const apiUrl = `${endpoint.cart}/cart/${user?._id}`;
+
+    fetch(apiUrl, {
+      next: { tags: ["test"] },
+    })
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error:", error));
+  }, []);
 
   return (
     <>
@@ -145,7 +161,10 @@ export default function Nav() {
                     />
                   </svg>
                 </Link>
-                <div className="cursor-pointer" onClick={openMenu}>
+                <div className="cursor-pointer relative" onClick={openMenu}>
+                  <div className="bg-button_2 absolute -right-1.5 -top-2.5 text-white font-normal w-5 h-5 flex items-center justify-center rounded-full text-center text-[12px]">
+                    {data?.totalQuantity}
+                  </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
@@ -280,7 +299,7 @@ export default function Nav() {
         height="h-screen"
         onClose={closeMenu}
       >
-        <Cart userId={user?._id} />
+        <UiCart cart={data} />
       </Popup>
     </>
   );

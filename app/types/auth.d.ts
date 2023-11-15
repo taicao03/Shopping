@@ -20,5 +20,5 @@ export interface AddToCart {
   productId?: string;
   color?: string;
   quantity?: number;
-  size;
+  size?: string;
 }

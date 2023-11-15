@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import endpoint from "@/app/network";
 import axios from "axios";
 import Button from "@/components/common/button";
+import { Reviews } from "@/app/types/product";
+
 export default function Reviews({
   props,
   productId,
@@ -24,8 +26,9 @@ export default function Reviews({
     e.preventDefault();
     const fromData = new FormData();
     fromData.append("productId", `${productId}`);
-    fromData.append("rating", rating);
+    fromData.append("rating", rating as any);
     fromData.append("comment", `${coment}`);
+
     const result = await axios
       .post(`${endpoint.product}/product/reviews`, fromData, {
         headers: {
@@ -44,8 +47,8 @@ export default function Reviews({
 
   const handleStarClick = (index?: any) => {
     let newRating;
-    newRating = index + 1;
 
+    newRating = index + 1;
     setRating(newRating);
   };
 
@@ -57,7 +60,7 @@ export default function Reviews({
             {[...Array(5)].map((_, index) => (
               <svg
                 key={index}
-                onClick={() => handleStarClick(index, index === 1)}
+                onClick={() => handleStarClick(index)}
                 width="50"
                 height="50"
                 viewBox="0 0 24 24"
@@ -80,8 +83,8 @@ export default function Reviews({
             parentClass="flex items-center justify-center"
           />
         </form>
-        <div className="">
-          {props?.map((item, index) => (
+        <div>
+          {props?.map((item?: Reviews, index?: number) => (
             <div className="mb-5" key={index}>
               <div className="flex gap-x-2 items-center">
                 <img

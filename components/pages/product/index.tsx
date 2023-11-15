@@ -4,6 +4,7 @@ import { addToCart } from "@/app/actions/cart/index";
 import CounterInput from "@/components/common/counter_input";
 import Button from "@/components/common/button";
 import Reviews from "./reviews";
+import SliderProduct from "@/components/common/slider";
 
 export default function DetailProduct({ props }: any) {
   const [color, setColor] = useState("");
@@ -91,8 +92,10 @@ export default function DetailProduct({ props }: any) {
 
   return (
     <>
-      <div className="grid grid-cols-3">
-        <div className="col-span-2">dsfds</div>
+      <div className="grid grid-cols-3 gap-x-[70px]">
+        <div className="col-span-2">
+          <SliderProduct />
+        </div>
         <div className="col-span-1">
           <h2 className="text-black font-semibold leading-6 text-[24px] mb-4">
             {props?.nameCard}

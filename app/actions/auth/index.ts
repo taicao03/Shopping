@@ -4,9 +4,9 @@ import axios from "axios";
 import endpoint from "@/app/network";
 import type { SignUp, Account, SignIn } from "@/app/types/auth";
 import { revalidatePath, revalidateTag } from "next/cache";
-import { redirect  } from "next/navigation";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-
+import { permanentRedirect } from "next/navigation";
 export const signUp = async (e: FormData) => {
   const userName = e.get("userName")?.toString();
   const email = e.get("email")?.toString();
@@ -52,9 +52,7 @@ export const signIn = async (e: FormData) => {
     const data = await res.json();
     cookies().set("user", JSON.stringify(data?.others));
     cookies().set("token", JSON.stringify(data?.accessToken));
-    revalidatePath('/' ,"page")
-    redirect(`/`);
-    
+    permanentRedirect("/");
   }
 };
 

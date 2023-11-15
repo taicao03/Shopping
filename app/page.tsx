@@ -1,13 +1,8 @@
-"use client";
 import React from "react";
-import useAuth from "./context/auth";
+import { getAllProduct } from "./api/product/product";
 
-export default function Home() {
-  const { user } = useAuth() as { user: any };
+export default async function Home() {
+  const getProductAll = await getAllProduct();
 
-  return (
-    <div className="main_container">
-      <div className="text-black">{user?.userName}</div>
-    </div>
-  );
+  return <></>;
 }

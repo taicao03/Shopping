@@ -1,21 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import endpoint from "@/app/network";
+import { Cart } from "@/app/types/product";
 
-export default function Cart({ userId }: { userId?: string }) {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const apiUrl = `${endpoint.cart}/cart/${userId}`;
-
-    fetch(apiUrl, {
-      next: { tags: ["test"] },
-    })
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error:", error));
-  }, []);
+export default function Cart(cart?: any) {
 
   return <></>;
 }

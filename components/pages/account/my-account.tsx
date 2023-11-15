@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import endpoint from "@/app/network";
 import MenuAccount from "./menu_account";
 import Input from "@/components/common/input";
 import Button from "@/components/common/button";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import axios from "axios";
 import useAuth from "@/app/context/auth";
 
@@ -17,7 +17,7 @@ export default function UiMyAccount(user: any) {
 
   const router = useRouter();
 
-  const onInputChange = (e) => {
+  const onInputChange = (e?: any) => {
     setAvatar(e.target.files[0]);
   };
   const menu = [
@@ -32,8 +32,8 @@ export default function UiMyAccount(user: any) {
 
     const fromData = new FormData();
 
-    fromData.append("avatar", avatar);
-    fromData.append("userName", userName);
+    fromData.append("avatar", avatar as any);
+    fromData.append("userName", userName as string);
 
     const result = await axios
       .put(`${endpoint.user}`, fromData, {
@@ -67,10 +67,10 @@ export default function UiMyAccount(user: any) {
             <p className="text-black text-nav_content me-2">My account</p>
           </div>
           <p className="text-nav_content text-black">
-            Welcome!{" "}
+            Welcome!
             <img
               className="h-20 w-20"
-              src={`http://localhost:8080/uploads/${user?.user?.avatar}`}
+              src={`${process.env.NEXT_PUBLIC_IMG_URL}/${user?.user?.avatar}`}
               alt=""
             />
             <span className="text-button_2">{user?.user?.userName}</span>
