@@ -1,8 +1,9 @@
 "use server";
 
 import endpoints from "@/app/network/index";
+import { ProductField } from "@/app/types/product";
 
-export const getAllProduct = async () => {
+export const getAllProduct = async ({ categoryId }: ProductField) => {
   const url = `${endpoints?.product}/getallcard`;
   const res = await fetch(url, {
     method: "GET",
