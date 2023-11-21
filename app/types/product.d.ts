@@ -32,3 +32,10 @@ export interface ProductField {
   nameCard?: string;
   price?: number;
 }
+
+export interface ListProduct {
+  price?: number;
+  nameCard?: string;
+  images?: string;
+  rating?:number
+}

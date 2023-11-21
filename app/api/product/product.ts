@@ -3,9 +3,9 @@
 import endpoints from "@/app/network/index";
 import { ProductField } from "@/app/types/product";
 
-export const getAllProduct = async ({ categoryId }: ProductField) => {
+export const getAllProduct = async ({ query }: {string?:string}) => {
   const url = `${endpoints?.product}/getallcard`;
-  const res = await fetch(url, {
+  const res = await fetch(url, {66
     method: "GET",
     next: { revalidate: 0 },
   });
