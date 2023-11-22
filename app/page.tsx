@@ -3,16 +3,17 @@ import { getAllProduct } from "./api/product/product";
 
 // Page
 import Royal from "@/components/pages/home/royal";
+
 export default async function Home() {
   const getProductAll = await getAllProduct({
-    query: "653de9786da315897d21b805",
+    query: "?keyCategory=royal",
   });
 
   console.log(getProductAll);
 
   return (
-    <>
-      <Royal props={} />
-    </>
+    <div className="main_container">
+      <Royal props={getProductAll} />
+    </div>
   );
 }

@@ -37,5 +37,8 @@ export interface ListProduct {
   price?: number;
   nameCard?: string;
   images?: string;
-  rating?:number
+  rating?: number;
+  totalReviews?: number;
+  sale: number;
+  priceSale?: number;
 }
