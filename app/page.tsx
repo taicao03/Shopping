@@ -9,8 +9,6 @@ export default async function Home() {
     query: "?keyCategory=royal",
   });
 
-  console.log(getProductAll);
-
   return (
     <div className="main_container">
       <Royal props={getProductAll} />

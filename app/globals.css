@@ -39,7 +39,7 @@ body {
   appearance: textfield;
 }
 
-.no-spin::-webkit-inner-spin-button, 
+.no-spin::-webkit-inner-spin-button,
 .no-spin::-webkit-outer-spin-button {
   display: none;
 }
@@ -55,4 +55,44 @@ body {
     width: 1170px;
     margin: 0 auto;
   }
+}
+
+section {
+  text-transform: uppercase;
+  overflow-x: hidden;
+}
+section div {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+section div .news-message {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  animation: slide-left 20s linear infinite;
+}
+section div .news-message p {
+  padding-left: 0.5em;
+}
+@keyframes slide-left {
+  from {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  to {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

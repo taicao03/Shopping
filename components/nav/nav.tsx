@@ -78,20 +78,24 @@ export default function Nav() {
   return (
     <>
       <div className="border-b border-b-text-black">
-        <div className="w-full grid grid-cols-4 py-3 bg-black">
-          <div className="col-span-1"></div>
-          <div className="col-span-2 text-center">
-            <p className="text-primary text-[14px] font-normal">
-              Summer Sale For All Swim Suits And Free Express Delivery - OFF
-              50%!
-              <Link href={""}>
-                <span className="text-primary text-[14px] font-semibold ms-2 underline">
-                  ShopNow
-                </span>
-              </Link>
-            </p>
+        <div className="w-full py-3 bg-black">
+          <div className="text-center">
+            <section>
+              <div>
+                <section className="news-message">
+                  <p className="text-primary text-[14px] font-normal">
+                    Summer Sale For All Swim Suits And Free Express Delivery -
+                    OFF 50%!
+                    <Link href={""}>
+                      <span className="text-primary text-[14px] font-semibold ms-2 underline">
+                        ShopNow
+                      </span>
+                    </Link>
+                  </p>
+                </section>
+              </div>
+            </section>
           </div>
-          <div className="col-span-1"></div>
         </div>
         <div className="main_container bg-primary pt-10 pb-4">
           <div className="grid grid-cols-5 items-center">
@@ -295,8 +299,6 @@ export default function Nav() {
         isOpen={isMenuOpen}
         position="right-0"
         top="top-0"
-        witdh="w-[30%]"
-        height="h-screen"
         onClose={closeMenu}
       >
         <UiCart cart={data} />
