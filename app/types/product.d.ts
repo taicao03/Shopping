@@ -41,4 +41,5 @@ export interface ListProduct {
   totalReviews?: number;
   sale: number;
   priceSale?: number;
+  id: string;
 }

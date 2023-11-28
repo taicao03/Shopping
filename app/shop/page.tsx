@@ -1,11 +1,13 @@
 import React from "react";
 
 import ListingStore from "@/components/pages/store";
+import { getOneStoreUser } from "../api/shop/shop";
 
-export default function Store() {
+export default async function Store() {
+  const data = await getOneStoreUser();
   return (
     <>
-      <ListingStore />
+      <ListingStore props={data} />
     </>
   );
 }

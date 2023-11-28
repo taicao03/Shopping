@@ -166,9 +166,14 @@ export default function Nav() {
                   </svg>
                 </Link>
                 <div className="cursor-pointer relative" onClick={openMenu}>
-                  <div className="bg-button_2 absolute -right-1.5 -top-2.5 text-white font-normal w-5 h-5 flex items-center justify-center rounded-full text-center text-[12px]">
-                    {data?.totalQuantity}
-                  </div>
+                  {data?.totalQuantity ? (
+                    <div className="bg-button_2 absolute -right-1.5 -top-2.5 text-white font-normal w-5 h-5 flex items-center justify-center rounded-full text-center text-[12px]">
+                      {data?.totalQuantity}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"

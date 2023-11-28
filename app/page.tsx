@@ -1,17 +1,15 @@
-import React from "react";
-import { getAllProduct } from "./api/product/product";
-
+import React, { Suspense, lazy } from "react";
+import Loading from "./loading";
 // Page
-import Royal from "@/components/pages/home/royal";
-
+const Royal = lazy(() => import("@/components/pages/home/royal"));
 export default async function Home() {
-  const getProductAll = await getAllProduct({
-    query: "?keyCategory=royal",
-  });
-
   return (
-    <div className="main_container">
-      <Royal props={getProductAll} />
-    </div>
+    <>
+      <Suspense fallback={<Loading />}>
+        <div className="main_container">
+          <Royal />
+        </div>
+      </Suspense>
+    </>
   );
 }

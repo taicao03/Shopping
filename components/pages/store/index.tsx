@@ -1,16 +1,11 @@
 "use client";
 import React from "react";
-import useAuth from "@/app/context/auth";
 
-export default function ListingStore() {
-  const { user } = useAuth() as { user: any };
-
-  console.log("â", user);
-
+export default function ListingStore({ props }: { props?: any }) {
   return (
     <>
-      {user?.myStore?.length ? (
-        <p></p>
+      {props ? (
+        <h5 className="text-black">aloo</h5>
       ) : (
         <div className="relative overflow-hidden bg-white">
           <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">

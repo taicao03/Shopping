@@ -15,29 +15,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const router = useRouter();
-  const token = getCookie("token");
-  const getToken = token ? JSON.parse(token) : null;
 
-  const [user, setUser] = useState(() => {});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`${endpoint.user}/one-user`, {
-        headers: {
-          token: `Break ${getToken}`,
-        },
-      });
-      const result = await response.json();
-      setUser(result);
-    };
-
-    fetchData();
-  }, []);
+  const [user, setUser] = useState(() => {
+    const cookie = getCookie("user");
+    return cookie ? JSON.parse(cookie) : null;
+  });
+  const [token] = useState(() => {
+    const token = getCookie("token");
+    return token ? JSON.parse(token) : null;
+  });
 
   const logOut = () => {
     deleteCookie("user");
     deleteCookie("token");
-    setUser();
+    setUser(null);
     router.push("/");
   };
 
