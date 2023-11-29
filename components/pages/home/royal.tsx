@@ -13,6 +13,8 @@ export default function Royal() {
   const page = data?.page;
   const totalPages = data?.totalPages;
   const [loading, setLoading] = useState(true);
+  const [whisList, setWishList] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       const url = `${endpoints?.product}/getallcard?page=${
@@ -52,6 +54,7 @@ export default function Royal() {
                   totalReviews={item?.reviews.length}
                   sale={item?.sales}
                   priceSale={item?.priceSales}
+                  wishList={whisList}
                 />
               ))}
             </div>

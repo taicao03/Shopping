@@ -35,6 +35,7 @@ export interface ProductField {
 
 export interface ListProduct {
   price?: number;
+  wishList?: boolean;
   nameCard?: string;
   images?: string;
   rating?: number;
@@ -42,4 +43,5 @@ export interface ListProduct {
   sale: number;
   priceSale?: number;
   id: string;
+  sold?: number;
 }
