@@ -35,6 +35,7 @@ export interface ProductField {
 
 export interface ListProduct {
   price?: number;
+  expireAt?: boolean;
   wishList?: boolean;
   nameCard?: string;
   images?: string;
@@ -44,4 +45,5 @@ export interface ListProduct {
   priceSale?: number;
   id: string;
   sold?: number;
+  limited?: boolean;
 }

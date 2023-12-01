@@ -6,7 +6,10 @@ export default function Loading() {
     >
       <div className="absolute top-[50%] translate-y-[-50%] flex justify-center w-full">
         <h1 className="animate-pulse animate-once animate-ease-linear text-black text-[120px] ">
-          Chin Chàoooo
+          <img
+            src="https://triptoursmadrid.com/wp-content/uploads/2023/06/travellers-choice-2023-1.gif"
+            alt=""
+          />
         </h1>
       </div>
     </div>

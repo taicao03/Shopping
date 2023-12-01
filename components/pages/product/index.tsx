@@ -4,7 +4,7 @@ import { addToCart } from "@/app/actions/cart/index";
 import CounterInput from "@/components/common/counter_input";
 import Button from "@/components/common/button";
 import Reviews from "./reviews";
-import SliderProduct from "@/components/common/slider";
+import { SliderProduct } from "@/components/common/slider";
 import StarRating from "@/components/common/products/star";
 
 export default function DetailProduct({ props }: any) {

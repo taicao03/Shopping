@@ -8,7 +8,9 @@ import Heading from "@/components/common/heading";
 import Button from "@/components/common/button";
 import Pagination from "@/components/common/pagination";
 
-export default function Royal() {
+const quantityProduct = 4;
+
+export default function Sales() {
   const searchParam = useSearchParams();
   const search = searchParam.get("page");
   const [data, setData] = useState<any>(null);
@@ -22,9 +24,10 @@ export default function Royal() {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const url = `${endpoints?.product}/getallcard?page=${
-        search || 1
-      }&pageSize=${pageSize}`;
+      const url = `${
+        endpoints?.product
+      }/getallcard?page=${1}&pageSize=${pageSize}&sales=${Number(1)} `;
+
       try {
         setLoading(true);
         const response = await fetch(url);
@@ -38,11 +41,16 @@ export default function Royal() {
     };
 
     fetchData();
-  }, [search, pageSize]);
+  }, [pageSize]);
 
   return (
-    <div>
-      <Heading title="Royal" heading="Browse By Category" />
+    <div className="my-10">
+      <Heading
+        title="Today’s"
+        heading="Flash Sales"
+        link="/"
+        textLink="View All"
+      />
       <Skeleton loading={loading} quantity={pageSize}>
         {page > totalPages ? (
           <></>
@@ -74,11 +82,16 @@ export default function Royal() {
           </>
         )}
       </Skeleton>
-      <Button
-        parentClass="flex items-center justify-center my-10"
-        text={pageSize == 4 ? "View All" : "Show less"}
-        onClick={togglePageSize}
-      />
+
+      {data?.totalResults > quantityProduct ? (
+        <Button
+          parentClass="flex items-center justify-center"
+          text={pageSize == 4 ? "View All" : "Show less"}
+          onClick={togglePageSize}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

@@ -3,15 +3,19 @@ import React, { ReactElement } from "react";
 type Props = {
   loading?: boolean;
   children?: ReactElement;
+  quantity?: number;
 };
-export default function Skeleton({ loading, children }: Props) {
+export default function Skeleton({ loading, children, quantity }: Props) {
   return (
     <>
       {loading && (
         <ul>
           <div className="grid grid-cols-4 gap-5">
-            {[...Array(12)].map((e, index) => (
-              <div className="border border-outline shadow rounded-md max-w-sm w-full mx-auto">
+            {[...Array(quantity || 8)].map((_, index) => (
+              <div
+                key={index}
+                className="border border-outline shadow rounded-md max-w-sm w-full mx-auto"
+              >
                 <div className="animate-pulse flex items-center flex-wrap pb-1">
                   <div className="h-[150px] bg-[#F8F8FF] w-full rounded-t relative">
                     <img

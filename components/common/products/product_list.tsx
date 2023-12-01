@@ -14,19 +14,38 @@ export default function ProductList({
   priceSale,
   id,
   wishList,
+  expireAt,
+  limited,
 }: ListProduct) {
   return (
     <>
       <Suspense fallback={<Skeleton />}>
         <div className="group col-span-2 md:col-span-1">
           <div className="relative">
-            {sale > 0 ? (
-              <span className="py-2 px-3 absolute top-[16px] rounded left-0 bg-button_2 text-white font-normal text-[12px] leading-3">
-                {sale}%
-              </span>
-            ) : (
-              <></>
-            )}
+            <div className="left-4 absolute top-[16px]">
+              {expireAt ? (
+                <span className="py-2 px-3  rounded  bg-green text-white font-normal text-[12px] leading-3  me-2">
+                  New
+                </span>
+              ) : (
+                <></>
+              )}
+              {sale > 0 ? (
+                <span className="py-2 px-3  rounded  bg-button_2 text-white font-normal text-[12px] leading-3 me-2">
+                  {sale}%
+                </span>
+              ) : (
+                <></>
+              )}
+
+              {limited ? (
+                <span className="py-2 px-3  rounded color-limited text-indigo-600 font-bold uppercase text-[12px] leading-3">
+                  limited
+                </span>
+              ) : (
+                <></>
+              )}
+            </div>
 
             <img
               src={images}
