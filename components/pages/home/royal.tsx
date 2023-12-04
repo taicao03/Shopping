@@ -9,9 +9,8 @@ import Button from "@/components/common/button";
 import Pagination from "@/components/common/pagination";
 
 export default function Royal() {
-  const searchParam = useSearchParams();
-  const search = searchParam.get("page");
   const [data, setData] = useState<any>(null);
+  const [pages, setPages] = useState(1);
   const [pageSize, setPageSize] = useState(4);
   const page = data?.page;
   const totalPages = data?.totalPages;
@@ -20,11 +19,10 @@ export default function Royal() {
   const togglePageSize = () => {
     setPageSize((prevSize) => (prevSize === 4 ? 8 : 4));
   };
+
   useEffect(() => {
     const fetchData = async () => {
-      const url = `${endpoints?.product}/getallcard?page=${
-        search || 1
-      }&pageSize=${pageSize}`;
+      const url = `${endpoints?.product}/getallcard?page=${pages}&pageSize=${pageSize}`;
       try {
         setLoading(true);
         const response = await fetch(url);
@@ -38,11 +36,11 @@ export default function Royal() {
     };
 
     fetchData();
-  }, [search, pageSize]);
+  }, [pages, pageSize]);
 
   return (
     <div>
-      <Heading title="Royal" heading="Browse By Category" />
+      <Heading title="Royal" heading="Royal By Category" />
       <Skeleton loading={loading} quantity={pageSize}>
         {page > totalPages ? (
           <></>
@@ -67,7 +65,11 @@ export default function Royal() {
               ))}
             </div>
             {pageSize === 8 ? (
-              <Pagination page={page} totalPages={totalPages} />
+              <Pagination
+                page={page}
+                totalPages={totalPages}
+                setPages={setPages}
+              />
             ) : (
               <></>
             )}

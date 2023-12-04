@@ -90,7 +90,7 @@ export default function ProductList({
             </div>
             <Link href={`/product/${id}`}>
               <button
-                className="bg-black text-white w-full hidden group-hover:block transition duration-700 ease-in-out py-2 absolute bottom-0 right-0 left-0 rounded-b"
+                className="bg-black opacity-80 text-white w-full hidden group-hover:block transition duration-700 ease-in-out py-2 absolute bottom-0 right-0 left-0 rounded-b"
                 type="button"
               >
                 Add to cart

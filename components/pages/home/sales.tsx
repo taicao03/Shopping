@@ -48,7 +48,7 @@ export default function Sales() {
       <Heading
         title="Today’s"
         heading="Flash Sales"
-        link="/"
+        link="/product?sales=1&keyword="
         textLink="View All"
       />
       <Skeleton loading={loading} quantity={pageSize}>

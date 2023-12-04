@@ -1,23 +1,34 @@
 "use client";
+
 import React, { Fragment, useState, useEffect } from "react";
 import endpoint from "@/app/network";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useAuth from "@/app/context/auth";
 import UiCart from "./cart";
 import Popup from "../common/popup";
 import { Cart } from "@/app/types/product";
-
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [data, setData] = useState<Cart>();
+  const [searchValue, setSearchValue] = useState("");
+  const router = useRouter();
 
   const openMenu = () => {
     setIsMenuOpen(true);
   };
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+  const handleSearch = () => {
+    router.push(`/product?keyword=${searchValue}`);
+  };
+
+  const handleKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
   };
 
   const nav = [
@@ -125,7 +136,10 @@ export default function Nav() {
               <div className="flex items-center justify-end gap-3">
                 <label className="relative block">
                   <span className="sr-only">Search</span>
-                  <span className="absolute inset-y-0 right-[8px] flex items-center pl-2">
+                  <span
+                    className="absolute inset-y-0 right-[8px] flex items-center pl-2 cursor-pointer"
+                    onClick={handleSearch}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -145,7 +159,9 @@ export default function Nav() {
                     className=" placeholder:text-[12px] font-normal leading-4 block w-full rounded-md bg-secondary_2 text-black outline-none px-3 pr-8 py-[7px] shadow-sm focus:outline-none"
                     placeholder="What are you looking for?"
                     type="text"
+                    onKeyDown={handleKeyPress}
                     name="search"
+                    onChange={(e: any) => setSearchValue(e.target.value)}
                   />
                 </label>
                 <Link href={""}>
